@@ -1,5 +1,6 @@
 function multiplyByTwo(num) {
-    console.log(num * 2);
+    let result = num * 2;
+    console.log(result);
 }
 
-solve(16);
+multiplyByTwo(16);
