@@ -1,39 +1,34 @@
-function calcSpeedLimit(area) {
-    let speedLimitKmH = 0;
-    if (area === "motorway") {
-        speedLimitKmH = 130;
-    }
-    else if (area === "interstate") {
-        speedLimitKmH = 90;
-    }
-    else if (area === "city") {
-        speedLimitKmH = 50;
-    }
-    else if (area === "residential") {
-        speedLimitKmH = 20;
-    }
-    return speedLimitKmH;
-}
-
 function printDrivingStatus(speed, area) {
-    let speedLimitKmH = calcSpeedLimit(area);
+    const speedLimits = {
+        motorway: 130,
+        interstate: 90,
+        city: 50,
+        residential: 20,
+    }
+    const currentSpeedLimit = speedLimits[area];
+    let speedOverLimit = speed - currentSpeedLimit;
+
+    if (speed <= currentSpeedLimit) {
+        console.log(`Driving ${speed} km/h in a ${currentSpeedLimit} zone`)
+        return
+    }
+
     let status = '';
-    if (speed <= speedLimitKmH) {
-        console.log(`Driving ${speed} km/h in a ${speedLimitKmH} zone`)
+    if (speedOverLimit <= 20){
+        status = "speeding";
+    }
+    else if (speedOverLimit <= 40){
+        status = "excessive speeding";
     }
     else {
-        let difference = speed - speedLimitKmH;
-        if (difference <= 20){
-            status = "speeding";
-        }
-        else if (difference <= 40){
-            status = "excessive speeding";
-        }
-        else {
-            status = "reckless driving";
-        }
-        console.log(`The speed is ${difference} km/h faster than the allowed speed of ${speedLimitKmH} - ${status}`)
+        status = "reckless driving";
     }
+
+    console.log(`The speed is ${speedOverLimit} km/h faster than the allowed speed of ${currentSpeedLimit} - ${status}`)
 }
 
+
+printDrivingStatus(40, 'city');
+printDrivingStatus(21, 'residential');
+printDrivingStatus(120, 'interstate');
 printDrivingStatus(200, 'motorway');
